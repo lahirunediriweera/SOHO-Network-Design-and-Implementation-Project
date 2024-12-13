@@ -1,0 +1,5 @@
+Switch>enable
+Switch#configure terminal
+
+Switch(config)#hostname Switch-02
+Switch-02(config)#

@@ -1,0 +1,63 @@
+Router>enable 
+Router#configure terminal 
+
+Router(config)#hostname MainRouter
+MainRouter(config)#
+
+MainRouter(config)#interface gigabitEthernet 0/0/0
+MainRouter(config-if)#description VLAN-SWITCH
+MainRouter(config-if)#no ip address 
+MainRouter(config-if)#no shutdown
+
+MainRouter(config)#interface gigabitEthernet 0/0/0.2
+MainRouter(config-subif)#encapsulation dot1Q 2
+MainRouter(config-subif)#ip address 192.168.0.97 255.255.255.224
+MainRouter(config-subif)#ip helper-address 192.168.0.130
+MainRouter(config-subif)#no shutdown 
+MainRouter(config-subif)#exit 
+
+MainRouter(config)#interface gigabitEthernet 0/0/0.3
+MainRouter(config-subif)#encapsulation dot1Q 3
+MainRouter(config-subif)#ip address 192.168.0.65 255.255.255.224
+MainRouter(config-subif)#ip helper-address 192.168.0.130
+MainRouter(config-subif)#no shutdown
+MainRouter(config-subif)#exit
+
+MainRouter(config)#interface gigabitEthernet 0/0/0.4
+MainRouter(config-subif)#encapsulation dot1Q 4
+MainRouter(config-subif)#ip address 192.168.0.1 255.255.255.192
+MainRouter(config-subif)#ip helper-address 192.168.0.130
+MainRouter(config-subif)#no shutdown
+MainRouter(config-subif)#exit
+
+MainRouter(config)#enable secret Soho@123
+
+MainRouter(config-line)#password Soho@123
+MainRouter(config-line)#exec-timeout 15
+MainRouter(config-line)#login
+MainRouter(config-line)#exit
+
+MainRouter(config)#username Admin secret Soho@123
+MainRouter(config)#ip domain-name soho.lk
+MainRouter(config)#crypto key generate rsa
+How many bits in the modulus [512]: 1024
+MainRouter(config)#ip ssh version 2
+
+MainRouter(config)#line vty 0
+MainRouter(config-line)#transport input ssh
+MainRouter(config-line)#login local
+MainRouter(config-line)#exec-timeout 15
+MainRouter(config-line)#exit
+
+MainRouter(config)#service password-encryption 
+
+MainRouter(config)#security passwords min-length 10
+
+MainRouter(config)#login block 300 attempts 3 within 60
+
+MainRouter(config)#do wr
+
+MainRouter(config)#banner motd *
+Enter TEXT message.  End with the character '*'.
+############################### THIS IS SOHO NETWORK IMPLEMENTATION ###############################
+*

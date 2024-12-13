@@ -1,0 +1,37 @@
+Switch>enable
+Switch#configure terminal
+
+Switch(config)#hostname MainSwitch
+MainSwitch(config)#
+
+MainSwitch(config)#vlan 2
+MainSwitch(config-vlan)#name Admin
+MainSwitch(config-vlan)#exit
+
+MainSwitch(config)#vlan 3
+MainSwitch(config-vlan)#name Finance
+MainSwitch(config-vlan)#exit
+
+MainSwitch(config)#vlan 4
+MainSwitch(config-vlan)#name Reception
+MainSwitch(config-vlan)#exit
+
+MainSwitch(config)#interface range fastEthernet 0/1-5
+MainSwitch(config-if-range)#switchport mode access
+MainSwitch(config-if-range)#switchport access vlan 2
+MainSwitch(config-if-range)#exit
+
+MainSwitch(config)#interface range fastEthernet 0/6-10
+MainSwitch(config-if-range)#switchport mode access
+MainSwitch(config-if-range)#switchport access vlan 3
+MainSwitch(config-if-range)#exit
+
+MainSwitch(config)#interface range fastEthernet 0/11-15
+MainSwitch(config-if-range)#switchport mode access
+MainSwitch(config-if-range)#switchport access vlan 4
+MainSwitch(config-if-range)#exit
+
+MainSwitch(config)#interface gigabitEthernet 0/1
+MainSwitch(config-if)#switchport mode trunk
+MainSwitch(config-if)#exit
+
